@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية ماث - الأستاذ محمود الأمين</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            navy: '#1e1b4b',
+                            primary: '#4f46e5',
+                            accent: '#06b6d4',
+                            emerald: '#10b981',
+                            gold: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background animation */
+        .math-symbol {
+            position: absolute;
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.12;
+            animation: float 15s infinite ease-in-out;
+            color: #6366f1;
+            font-weight: bold;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-25px) rotate(15deg);
+            }
+        }
+
+        /* Custom Glassmorphism */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-glass {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .input-glass:focus {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #6366f1;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.25);
+            outline: none;
+        }
+
+        /* Pulse glow button */
+        .btn-glow {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Custom Radio Buttons styling */
+        .grade-radio:checked + label {
+            border-color: #06b6d4;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.3), rgba(6, 182, 212, 0.2));
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Scrollbar aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-brand-primary selection:text-white">
+
+    <!-- Math Floating Background Symbols -->
+    <div id="math-bg" class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <span class="math-symbol text-4xl top-10 right-10" style="animation-delay: 0s;">π</span>
+        <span class="math-symbol text-6xl top-1/4 left-12" style="animation-delay: 2s;">√x</span>
+        <span class="math-symbol text-5xl top-1/2 right-1/4" style="animation-delay: 4s;">∑</span>
+        <span class="math-symbol text-6xl bottom-1/4 left-1/3" style="animation-delay: 1s;">∫</span>
+        <span class="math-symbol text-5xl bottom-10 right-10" style="animation-delay: 3s;">x² + y²</span>
+        <span class="math-symbol text-4xl top-1/3 right-12" style="animation-delay: 5s;">Δ</span>
+        <span class="math-symbol text-6xl bottom-1/3 right-1/2" style="animation-delay: 2.5s;">∞</span>
+        <span class="math-symbol text-5xl top-12 left-1/3" style="animation-delay: 3.5s;">≠</span>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container mx-auto px-4 py-8 relative z-10 flex-grow flex flex-col items-center justify-center">
+
+        <!-- Header / Branding Section -->
+        <header class="text-center mb-8 max-w-2xl w-full">
+            <div class="inline-flex items-center gap-3 bg-indigo-950/80 border border-indigo-500/30 px-5 py-2 rounded-full mb-4 shadow-lg backdrop-blur-md">
+                <i class="fa-solid fa-laptop-code text-brand-accent text-xl animate-pulse"></i>
+                <span class="text-indigo-200 text-sm md:text-base font-semibold">منصة التعلم الأونلاين في الرياضيات</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-indigo-300">
+                أكاديمية <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">ماث</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-300 font-bold mb-2">
+                مع الأستاذ <span class="text-brand-gold font-extrabold underline decoration-brand-accent/50 underline-offset-8">محمود الأمين</span>
+            </p>
+            <p class="text-sm md:text-base text-slate-400">سجّل الآن في الكورس الأونلاين لتبسيط الرياضيات وضمان الدرجة النهائية 💯</p>
+        </header>
+
+        <!-- Form Card Container -->
+        <div class="w-full max-w-xl glass-card rounded-3xl p-6 md:p-10 shadow-2xl relative">
+            
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-700/60 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center text-white shadow-md">
+                    <i class="fa-solid fa-user-pen text-lg"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-white">استمارة الحجز الأونلاين</h2>
+                    <p class="text-xs text-slate-400">من فضلك ادخل البيانات الصحيحة لتفعيل حسابك الأونلاين</p>
+                </div>
+            </div>
+
+            <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="space-y-5" novalidate>
+                
+                <!-- 1. Full Name -->
+                <div>
+                    <label for="fullName" class="block text-sm font-semibold text-slate-200 mb-2">
+                        <i class="fa-solid fa-user text-brand-accent ml-2"></i>الاسم الثلاثي <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="text" id="fullName" placeholder="مثال: أحمد محمد علي" 
+                        class="w-full input-glass px-4 py-3.5 rounded-xl text-white placeholder-slate-500 text-sm font-medium"
+                        required>
+                    <p id="nameError" class="text-rose-400 text-xs mt-1 hidden"><i class="fa-solid fa-circle-exclamation ml-1"></i>يرجى كتابة الاسم الثلاثي بشكل صحيح (3 كلمات على الأقل).</p>
+                </div>
+
+                <!-- 2. Egyptian Phone Number -->
+                <div>
+                    <label for="phoneNumber" class="block text-sm font-semibold text-slate-200 mb-2">
+                        <i class="fa-solid fa-phone text-brand-accent ml-2"></i>رقم الهاتف (واتساب) <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="tel" id="phoneNumber" placeholder="01012345678" maxlength="11"
+                            class="w-full input-glass px-4 py-3.5 rounded-xl text-white placeholder-slate-500 text-sm font-medium tracking-wide dir-ltr text-right"
+                            required>
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 bg-slate-800/80 px-2 py-1 rounded">🇪🇬 +20</span>
+                    </div>
+                    <p id="phoneError" class="text-rose-400 text-xs mt-1 hidden"><i class="fa-solid fa-circle-exclamation ml-1"></i>يرجى إدخال رقم هاتف مصري صحيح يتكون من 11 رقم ويبدأ بـ (010, 011, 012, 015).</p>
+                </div>
+
+                <!-- 3. Governorate -->
+                <div>
+                    <label for="governorate" class="block text-sm font-semibold text-slate-200 mb-2">
+                        <i class="fa-solid fa-location-dot text-brand-accent ml-2"></i>المحافظة <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <select id="governorate" 
+                            class="w-full input-glass px-4 py-3.5 rounded-xl text-white text-sm font-medium appearance-none cursor-pointer" 
+                            required>
+                            <option value="" disabled selected class="bg-slate-900 text-slate-400">اختر المحافظة...</option>
+                            <option value="القاهرة" class="bg-slate-900">القاهرة</option>
+                            <option value="الجيزة" class="bg-slate-900">الجيزة</option>
+                            <option value="الإسكندرية" class="bg-slate-900">الإسكندرية</option>
+                            <option value="الشرقية" class="bg-slate-900">الشرقية</option>
+                            <option value="الدقهلية" class="bg-slate-900">الدقهلية</option>
+                            <option value="البحيرة" class="bg-slate-900">البحيرة</option>
+                            <option value="الغربية" class="bg-slate-900">الغربية</option>
+                            <option value="المنوفية" class="bg-slate-900">المنوفية</option>
+                            <option value="القليوبية" class="bg-slate-900">القليوبية</option>
+                            <option value="كفر الشيخ" class="bg-slate-900">كفر الشيخ</option>
+                            <option value="الفيوم" class="bg-slate-900">الفيوم</option>
+                            <option value="بني سويف" class="bg-slate-900">بني سويف</option>
+                            <option value="المنيا" class="bg-slate-900">المنيا</option>
+                            <option value="أسيوط" class="bg-slate-900">أسيوط</option>
+                            <option value="سوهاج" class="bg-slate-900">سوهاج</option>
+                            <option value="قنا" class="bg-slate-900">قنا</option>
+                            <option value="الأقصر" class="bg-slate-900">الأقصر</option>
+                            <option value="أسوان" class="bg-slate-900">أسوان</option>
+                            <option value="الإسماعيلية" class="bg-slate-900">الإسماعيلية</option>
+                            <option value="بورسعيد" class="bg-slate-900">بورسعيد</option>
+                            <option value="السويس" class="bg-slate-900">السويس</option>
+                            <option value="دمياط" class="bg-slate-900">دمياط</option>
+                            <option value="شمال سيناء" class="bg-slate-900">شمال سيناء</option>
+                            <option value="جنوك سيناء" class="bg-slate-900">جنوب سيناء</option>
+                            <option value="البحر الأحمر" class="bg-slate-900">البحر الأحمر</option>
+                            <option value="الوادي الجديد" class="bg-slate-900">الوادي الجديد</option>
+                            <option value="مطروح" class="bg-slate-900">مطروح</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+                    </div>
+                    <p id="govError" class="text-rose-400 text-xs mt-1 hidden"><i class="fa-solid fa-circle-exclamation ml-1"></i>يرجى اختيار المحافظة التابع لها.</p>
+                </div>
+
+                <!-- 4. Grade Selection (Radio Grid) -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-200 mb-2">
+                        <i class="fa-solid fa-graduation-cap text-brand-accent ml-2"></i>الصف الدراسي <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2.5">
+                        
+                        <!-- 1 Prep -->
+                        <div>
+                            <input type="radio" id="grade_1m" name="grade" value="الأول الإعدادي" class="grade-radio hidden">
+                            <label for="grade_1m" class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/40 cursor-pointer text-slate-300 text-xs font-bold text-center hover:border-slate-500 transition-all">
+                                <span class="text-slate-400 text-[10px]">المرحلة الإعدادية</span>
+                                الأول الإعدادي
+                            </label>
+                        </div>
+
+                        <!-- 2 Prep -->
+                        <div>
+                            <input type="radio" id="grade_2m" name="grade" value="الثاني الإعدادي" class="grade-radio hidden">
+                            <label for="grade_2m" class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/40 cursor-pointer text-slate-300 text-xs font-bold text-center hover:border-slate-500 transition-all">
+                                <span class="text-slate-400 text-[10px]">المرحلة الإعدادية</span>
+                                الثاني الإعدادي
+                            </label>
+                        </div>
+
+                        <!-- 3 Prep -->
+                        <div>
+                            <input type="radio" id="grade_3m" name="grade" value="الثالث الإعدادي" class="grade-radio hidden">
+                            <label for="grade_3m" class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/40 cursor-pointer text-slate-300 text-xs font-bold text-center hover:border-slate-500 transition-all">
+                                <span class="text-slate-400 text-[10px]">المرحلة الإعدادية</span>
+                                الثالث الإعدادي
+                            </label>
+                        </div>
+
+                        <!-- 1 Sec -->
+                        <div>
+                            <input type="radio" id="grade_1s" name="grade" value="الأول الثانوي" class="grade-radio hidden">
+                            <label for="grade_1s" class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/40 cursor-pointer text-slate-300 text-xs font-bold text-center hover:border-slate-500 transition-all">
+                                <span class="text-slate-400 text-[10px]">المرحلة الثانوية</span>
+                                الأول الثانوي
+                            </label>
+                        </div>
+
+                        <!-- 2 Sec Sci -->
+                        <div>
+                            <input type="radio" id="grade_2s_sci" name="grade" value="الثاني الثانوي (علمي)" class="grade-radio hidden">
+                            <label for="grade_2s_sci" class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/40 cursor-pointer text-slate-300 text-xs font-bold text-center hover:border-slate-500 transition-all">
+                                <span class="text-indigo-400 text-[10px]">المرحلة الثانوية</span>
+                                الثاني الثانوي (علمي)
+                            </label>
+                        </div>
+
+                        <!-- 2 Sec Art -->
+                        <div>
+                            <input type="radio" id="grade_2s_art" name="grade" value="الثاني الثانوي (أدبي)" class="grade-radio hidden">
+                            <label for="grade_2s_art" class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/40 cursor-pointer text-slate-300 text-xs font-bold text-center hover:border-slate-500 transition-all">
+                                <span class="text-cyan-400 text-[10px]">المرحلة الثانوية</span>
+                                الثاني الثانوي (أدبي)
+                            </label>
+                        </div>
+
+                    </div>
+                    <p id="gradeError" class="text-rose-400 text-xs mt-1 hidden"><i class="fa-solid fa-circle-exclamation ml-1"></i>يرجى تحديد الصف الدراسي.</p>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-3">
+                    <button type="submit" 
+                        class="btn-glow w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-base shadow-lg cursor-pointer active:scale-95 transition-transform">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        <span>تأكيد الحجز الأونلاين عبر الواتساب</span>
+                    </button>
+                    <p class="text-center text-xs text-slate-400 mt-2.5">
+                        سيتم فتح تطبيق الواتساب فوراً لإرسال بيانات اشتراكك الأونلاين إلى الأستاذ مباشرة.
+                    </p>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Features Showcase -->
+        <section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-xl">
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-lightbulb text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white">تبسيط المفاهيم</h3>
+                    <p class="text-xs text-slate-400">شرح مبسط وأساليب مبتكرة لكل درس</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-list-check text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white">امتحانات وتدريبات</h3>
+                    <p class="text-xs text-slate-400">متابعة دقيقة وتقييمات مستمرة</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-trophy text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-white">ضمان التميز</h3>
+                    <p class="text-xs text-slate-400">طريقك المباشر للدرجة النهائية</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-5 border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md relative z-10 text-xs text-slate-400">
+        <p>جميع الحقوق محفوظة © <script>document.write(new Date().getFullYear())</script> لأكاديمية ماث - الأستاذ <span class="text-slate-300 font-semibold">محمود الأمين</span></p>
+    </footer>
+
+    <!-- Notification Toast Container -->
+    <div id="toast" class="fixed bottom-5 left-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-rose-900/90 border border-rose-500 text-rose-100 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-medium backdrop-blur-md">
+            <i class="fa-solid fa-circle-exclamation text-lg text-rose-300"></i>
+            <span id="toastMessage">برجاء التأكد من صحة كافة البيانات</span>
+        </div>
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+        // Target WhatsApp Number
+        const WHATSAPP_NUMBER = "201022354511";
+
+        // Egyptian Phone Validation Regex (Starts with 010, 011, 012, 015 & total 11 digits)
+        const EGYPT_PHONE_REGEX = /^0(10|11|12|15)[0-9]{8}$/;
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+
+        function clearErrors() {
+            document.getElementById('nameError').classList.add('hidden');
+            document.getElementById('phoneError').classList.add('hidden');
+            document.getElementById('govError').classList.add('hidden');
+            document.getElementById('gradeError').classList.add('hidden');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            clearErrors();
+
+            let isValid = true;
+
+            // 1. Validate Full Name (minimum 3 words)
+            const fullNameInput = document.getElementById('fullName');
+            const fullName = fullNameInput.value.trim();
+            const nameWords = fullName.split(/\s+/).filter(word => word.length > 0);
+
+            if (nameWords.length < 3) {
+                document.getElementById('nameError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // 2. Validate Egyptian Phone
+            const phoneInput = document.getElementById('phoneNumber');
+            const phoneNumber = phoneInput.value.trim();
+
+            if (!EGYPT_PHONE_REGEX.test(phoneNumber)) {
+                document.getElementById('phoneError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // 3. Validate Governorate
+            const govInput = document.getElementById('governorate');
+            const governorate = govInput.value;
+
+            if (!governorate) {
+                document.getElementById('govError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            // 4. Validate Grade Selection
+            const selectedGrade = document.querySelector('input[name="grade"]:checked');
+            if (!selectedGrade) {
+                document.getElementById('gradeError').classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                showToast("من فضلك أكمل الحقول المطلوبة بشكل صحيح قبل الإرسال.");
+                return;
+            }
+
+            const gradeValue = selectedGrade.value;
+
+            // Construct Formatted WhatsApp Message
+            const whatsappText = 
+`السلام عليكم أستاذ محمود، أرغب في الاشتراك في كورس الرياضيات الأونلاين (أكاديمية ماث):
+📌 *الاسم:* ${fullName}
+📱 *رقم الهاتف:* ${phoneNumber}
+📍 *المحافظة:* ${governorate}
+📚 *الصف الدراسي:* ${gradeValue}`;
+
+            // URL Encode the WhatsApp text message
+            const encodedMessage = encodeURIComponent(whatsappText);
+            
+            // Build the WhatsApp redirect link
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+            // Open WhatsApp link in a new tab or app redirect
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Restrict phone input to numbers only
+        document.getElementById('phoneNumber').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+</body>
+</html>
